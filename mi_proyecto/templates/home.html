@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+
+{% block page_title %}
+<div class="flex justify-end mb-4 cursor-pointer">
+    {% if request.user.is_authenticated %}
+        <div class="flex items-center space-x-2">
+            <img src="{{ request.user.image.url }}" alt="Profile Picture" class="w-10 h-10 rounded-full object-cover">
+            <span class="font-medium">{{ request.user.username }}</span>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block content %}
+<main class="flex-1 p-8">
+
+    {% if request.user.is_authenticated %}
+    <!-- Welcome Section -->
+    <section class="bg-blue-50 p-6 rounded-lg border border-blue-100 mb-6">
+        <h1 class="text-2xl font-bold mb-2">Bienvenido al Sistema de Gestión de Registros Médicos</h1>
+        <p class="text-gray-600">
+            Administra y optimiza la información de pacientes, citas, servicios médicos y prescripciones en un solo lugar.
+            Nuestro sistema garantiza un manejo eficiente de los registros, acceso rápido a los datos y mejora el flujo de trabajo para los profesionales de la salud.
+        </p>
+    </section>
+
+    <!-- Cards -->
+    <section class="grid grid-cols-1 md:grid-cols-3 gap-6 cursor-pointer">
+        {% for module in modules %}
+        <div class="bg-white p-8 rounded-2xl shadow-md text-center hover:shadow-lg transition">
+            <!-- Ícono más grande -->
+            <div class="text-6xl text-emerald-600 mb-4">
+                <i class="{{ module.icon }}"></i>
+            </div>
+            <h2 class="text-2xl font-bold mb-2">{{ module.name }}</h2>
+            <p class="text-gray-600 text-base">{{ module.description }}</p>
+        </div>
+        {% endfor %}
+    </section>
+
+    {% else %}
+    <!-- Welcome (No autenticado) -->
+    <section class="bg-blue-50 p-6 rounded-lg border border-blue-100 mb-6">
+        <h1 class="text-2xl font-bold mb-2">Bienvenido al Sistema de Gestión de Registros Médicos</h1>
+        <p class="text-gray-600">Inicia sesión para empezar</p>
+    </section>
+    {% endif %}
+
+</main>
+
+{% if not request.user.is_authenticated %}
+<!-- Planes -->
+<section class="mt-12 max-w-7xl mx-auto px-4">
+    <h2 class="text-3xl font-extrabold text-center mb-8 text-emerald-700">Nuestros Planes</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+        <!-- Plan Básico -->
+        <div class="bg-white p-8 rounded-3xl shadow-lg hover:shadow-2xl transition relative border border-emerald-200">
+            <div class="flex justify-center mb-6 text-emerald-500 text-6xl">👤</div>
+            <h3 class="text-xl font-semibold text-center mb-2">Plan Básico</h3>
+            <p class="text-gray-600 text-center mb-6">Ideal para consultorios pequeños. Registra pacientes, citas y recetas médicas.</p>
+            <p class="text-center font-bold text-emerald-600 text-2xl mb-6">Gratis</p>
+            <button class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 rounded-full transition">
+                Comenzar Gratis
+            </button>
+        </div>
+
+        <!-- Plan Profesional -->
+        <div class="bg-white p-8 rounded-3xl shadow-lg hover:shadow-2xl transition relative border-4 border-emerald-600">
+            <div class="flex justify-center mb-6 text-emerald-700 text-6xl">💼</div>
+            <h3 class="text-xl font-semibold text-center mb-2">Plan Profesional</h3>
+            <p class="text-gray-600 text-center mb-6">Gestión avanzada, reportes detallados y soporte técnico.</p>
+            <p class="text-center font-bold text-emerald-700 text-2xl mb-6">$29 / mes</p>
+            <button class="w-full bg-emerald-700 hover:bg-emerald-800 text-white font-semibold py-3 rounded-full transition">
+                Contratar Ahora
+            </button>
+            <div class="absolute top-4 right-4 bg-emerald-600 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">
+                Recomendado
+            </div>
+        </div>
+
+        <!-- Plan Empresarial -->
+        <div class="bg-white p-8 rounded-3xl shadow-lg hover:shadow-2xl transition relative border border-emerald-200">
+            <div class="flex justify-center mb-6 text-emerald-500 text-6xl">🏢</div>
+            <h3 class="text-xl font-semibold text-center mb-2">Plan Empresarial</h3>
+            <p class="text-gray-600 text-center mb-6">Multiusuario, análisis avanzados y seguridad extra.</p>
+            <p class="text-center font-bold text-emerald-600 text-2xl mb-6">$59 / mes</p>
+            <button class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 rounded-full transition">
+                Contáctanos
+            </button>
+        </div>
+
+    </div>
+</section>
+
+<!-- Comentarios -->
+<section class="mt-20 max-w-7xl mx-auto px-4">
+    <h2 class="text-3xl font-extrabold text-center mb-10 text-emerald-700">Lo que dicen nuestros usuarios</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="bg-white p-8 rounded-3xl shadow-lg hover:shadow-xl transition">
+            <div class="flex items-center mb-4">
+                <span class="text-emerald-600 text-3xl mr-3">💬</span>
+                <h4 class="font-semibold text-lg">Dra. Mariana López</h4>
+            </div>
+            <p class="italic text-gray-700">"Este sistema ha cambiado completamente la manera en que gestionamos a nuestros pacientes."</p>
+        </div>
+
+        <div class="bg-white p-8 rounded-3xl shadow-lg hover:shadow-xl transition">
+            <div class="flex items-center mb-4">
+                <span class="text-emerald-600 text-3xl mr-3">💬</span>
+                <h4 class="font-semibold text-lg">Dr. Andrés Pérez</h4>
+            </div>
+            <p class="italic text-gray-700">"Fácil de usar y muy completo. Lo recomiendo a cualquier profesional de la salud."</p>
+        </div>
+
+        <div class="bg-white p-8 rounded-3xl shadow-lg hover:shadow-xl transition">
+            <div class="flex items-center mb-4">
+                <span class="text-emerald-600 text-3xl mr-3">💬</span>
+                <h4 class="font-semibold text-lg">Lic. Valeria Gómez</h4>
+            </div>
+            <p class="italic text-gray-700">"Ahora tengo todo en un solo lugar: pacientes, citas, servicios y recetas."</p>
+        </div>
+    </div>
+</section>
+
+
+<!-- Llamado a la acción -->
+<section class="mt-20 mb-20 text-center max-w-3xl mx-auto px-4">
+    <h2 class="text-3xl font-extrabold mb-4 text-emerald-700">¿Listo para mejorar tu consulta médica?</h2>
+    <p class="text-gray-600 mb-6">Comienza a usar el sistema hoy y simplifica tu trabajo como profesional de la salud.</p>
+</section>
+{% endif %}
+
+{% endblock %}
